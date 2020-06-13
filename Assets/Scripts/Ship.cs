@@ -2,32 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Ship : MonoBehaviour
 {
     public float MaxSpeed = 10;
     public float Acceleration = 1;
     public float RotateSpeed = 100;
 
-    public Vector3 velocity = new Vector3();
+    Rigidbody rbody;
+
+    void Awake()
+    {
+        rbody = GetComponent<Rigidbody>();
+    }
 
     void Start()
     {
-        
     }
 
     void Update()
     {
-        transform.position += velocity * Time.deltaTime;
     }
 
     public void Accelerate()
     {
-        velocity = Vector3.ClampMagnitude(velocity + transform.up * Acceleration * Time.deltaTime, MaxSpeed);
+        rbody.velocity = Vector3.ClampMagnitude(rbody.velocity + transform.up * Acceleration * Time.deltaTime, MaxSpeed);
     }
 
     public void Rotate(float direction)
     {
-        transform.Rotate(0, 0, RotateSpeed * direction * Time.deltaTime);
+        var delta = Quaternion.Euler(0, 0, RotateSpeed * direction * Time.deltaTime);
+        rbody.MoveRotation(rbody.rotation * delta);
     }
 
     public void RotateTowards(Vector3 target)

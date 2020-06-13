@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 4577154085973140413}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4160387622668344338}
   m_Father: {fileID: 5290963828765038239}
@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 8793078304205634390}
   - component: {fileID: 5253617649953102961}
   - component: {fileID: 2373092336535573090}
+  - component: {fileID: 8603140083293492794}
   m_Layer: 0
   m_Name: PlayerShip
   m_TagString: Untagged
@@ -145,7 +146,6 @@ MonoBehaviour:
   MaxSpeed: 10
   Acceleration: 1
   RotateSpeed: 50
-  velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &8793078304205634390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,6 +183,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bdd3cf9645643847bc099af38afe04d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &8603140083293492794
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6166785995390537513}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 56
+  m_CollisionDetection: 0
 --- !u!1 &9165457774372492765
 GameObject:
   m_ObjectHideFlags: 0
