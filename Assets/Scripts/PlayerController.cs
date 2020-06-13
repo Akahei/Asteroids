@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
     Ship playerShip;
     InputHandler inputHandler;
     PlayerInputType inputType => inputHandler.InputType;
-    // Start is called before the first frame update
 
     private void Awake()
     {
@@ -19,7 +18,6 @@ public class PlayerController : MonoBehaviour
     {
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (inputType == PlayerInputType.Keyboard)

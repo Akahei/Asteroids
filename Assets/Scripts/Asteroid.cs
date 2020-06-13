@@ -18,8 +18,4 @@ public class Asteroid : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(Random.Range(0, 360), Vector3.forward);
         rbody.velocity = transform.up * Random.Range(minSpeed, maxSpeed);
     }
-
-    void Update()
-    {
-    }
 }

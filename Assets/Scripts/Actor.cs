@@ -4,6 +4,12 @@ using UnityEngine.Events;
 public class Actor : MonoBehaviour
 {
     public UnityAction OnDied;
+    private PoolObject poolObject;
+
+    void Awake()
+    {
+        poolObject = GetComponent<PoolObject>();
+    }
 
     public void Die()
     {
@@ -11,10 +17,9 @@ public class Actor : MonoBehaviour
         {
             OnDied.Invoke();
         }
-        var pObject = GetComponent<PoolObject>();
-        if (pObject)
+        if (poolObject)
         {
-            pObject.ReturnToPool();
+            poolObject.ReturnToPool();
         }
         else
         {

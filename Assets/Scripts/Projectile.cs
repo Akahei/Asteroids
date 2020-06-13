@@ -37,21 +37,12 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        var actor = other.GetComponentInParent<Actor>();
-        if (actor == null) return;
+        if (other.GetComponentInParent<Projectile>() != null) return;
 
-        if (actor.gameObject == owner) return;
+        var otherActor = other.GetComponentInParent<Actor>();
+        if (otherActor == null || otherActor.gameObject == owner) return;
+        otherActor.Die();
+
         actor.Die();
-
-        var pObject = GetComponent<PoolObject>();
-        if (pObject)
-        {
-            pObject.ReturnToPool();
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
-    
 }
