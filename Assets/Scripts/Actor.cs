@@ -11,14 +11,17 @@ public class Actor : MonoBehaviour
         {
             OnDied.Invoke();
         }
-        HandleDie();
+        var pObject = GetComponent<PoolObject>();
+        if (pObject)
+        {
+            pObject.ReturnToPool();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    protected virtual void HandleDie()
-    {
-        Destroy(gameObject);
-    }
-    
     protected void Start()
     {
         Wrapper.Instance.Actors.Add(this);

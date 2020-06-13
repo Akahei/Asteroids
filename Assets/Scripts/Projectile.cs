@@ -8,6 +8,7 @@ public class Projectile : MonoBehaviour
 
     public GameObject Owner { get; private set; }
 
+    GameObject owner;
     Rigidbody rbody;
     Actor actor;
     float destroyTime;
@@ -19,8 +20,9 @@ public class Projectile : MonoBehaviour
         rbody = GetComponent<Rigidbody>();
     }
 
-    public void Init()
+    public void Init(GameObject projectileOwner)
     {
+        owner = projectileOwner;
         destroyTime = Time.time + LifeTime;
         rbody.velocity = transform.up * Speed;
     }
@@ -30,6 +32,25 @@ public class Projectile : MonoBehaviour
         if (Time.time >= destroyTime)
         {
             actor.Die();
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        var actor = other.GetComponentInParent<Actor>();
+        if (actor == null) return;
+
+        if (actor.gameObject == owner) return;
+        actor.Die();
+
+        var pObject = GetComponent<PoolObject>();
+        if (pObject)
+        {
+            pObject.ReturnToPool();
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
     

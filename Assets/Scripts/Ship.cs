@@ -30,10 +30,9 @@ public class Ship : MonoBehaviour
 
     public void Fire()
     {
-        Debug.Log(ProjectilePrefab);
         var projectileObject = PoolManager.Instance.SpawnObject(ProjectilePrefab, FirePoint.position, FirePoint.rotation);
         var projectlie = projectileObject.GetComponent<Projectile>();
-        projectlie.Init();
+        projectlie.Init(gameObject);
     }
 
     public void Accelerate()

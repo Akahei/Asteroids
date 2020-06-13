@@ -31,7 +31,7 @@ public class PoolManager : MonoBehaviour
         }
 
         var newInstance = Instantiate(prefab, pos, rot);;
-        var instanceActor = newInstance.GetComponent<PoolActor>();
+        var instanceActor = newInstance.GetComponent<PoolObject>();
         Assert.IsNotNull(instanceActor);
         instanceActor.OriginPrefab = prefab;
         return newInstance;
@@ -39,7 +39,7 @@ public class PoolManager : MonoBehaviour
 
     public void ReturnToPool(GameObject obj)
     {
-        var actor = obj.GetComponent<PoolActor>();
+        var actor = obj.GetComponent<PoolObject>();
         Pools[actor.OriginPrefab].Enqueue(obj);
         obj.SetActive(false);
     }
