@@ -9,13 +9,11 @@ public class Wrappable : MonoBehaviour
     void Start()
     {
         wrapper = GameObject.FindObjectOfType<Wrapper>();
-        // DebugUtility.HandleErrorIfNullFindObject<Wrapper, Wrappable>(wrapper, this);
-
         wrapper.Wrappables.Add(this);
     }
 
-    void Update()
+    void OnDestroy()
     {
-
+        wrapper.Wrappables.Remove(this);
     }
 }
