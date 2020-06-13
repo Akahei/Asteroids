@@ -17,6 +17,11 @@ public class InputHandler : MonoBehaviour
         return Input.GetButton("Forward");
     }
 
+    public bool IsFireInputDown()
+    {
+        return Input.GetButtonDown("Fire");
+    }
+
     public float GetRotationInput()
     {
         return Input.GetAxis("Rotation");

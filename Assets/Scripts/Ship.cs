@@ -1,13 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(Actor))]
 public class Ship : MonoBehaviour
 {
+    [Header("Movement")]
     public float MaxSpeed = 10;
     public float Acceleration = 1;
     public float RotateSpeed = 100;
+
+    [Header("Weapon")]
+    public GameObject ProjectilePrefab;
+    public Transform FirePoint;
+    
 
     Rigidbody rbody;
 
@@ -22,6 +26,14 @@ public class Ship : MonoBehaviour
 
     void Update()
     {
+    }
+
+    public void Fire()
+    {
+        Debug.Log(ProjectilePrefab);
+        var projectileObject = PoolManager.Instance.SpawnObject(ProjectilePrefab, FirePoint.position, FirePoint.rotation);
+        var projectlie = projectileObject.GetComponent<Projectile>();
+        projectlie.Init();
     }
 
     public void Accelerate()

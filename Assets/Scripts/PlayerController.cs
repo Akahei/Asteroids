@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(InputHandler))]
 public class PlayerController : MonoBehaviour
@@ -35,6 +33,11 @@ public class PlayerController : MonoBehaviour
         if (inputHandler.IsForwardInputDown())
         {
             playerShip.Accelerate();
+        }
+
+        if (inputHandler.IsFireInputDown())
+        {
+            playerShip.Fire();
         }
     }
 }

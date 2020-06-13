@@ -95,6 +95,36 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!1 &5015275366079857180
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5252177188292610298}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5252177188292610298
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5015275366079857180}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.514, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_Children: []
+  m_Father: {fileID: 5290963828765038239}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6166785995390537513
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,10 +134,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5290963828765038239}
+  - component: {fileID: 1538793650156950144}
   - component: {fileID: 4842522919836821374}
   - component: {fileID: 8793078304205634390}
   - component: {fileID: 5253617649953102961}
-  - component: {fileID: 2373092336535573090}
   - component: {fileID: 8603140083293492794}
   m_Layer: 0
   m_Name: PlayerShip
@@ -128,9 +158,23 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6006293331200510188}
+  - {fileID: 5252177188292610298}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1538793650156950144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6166785995390537513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04378ca7e87ead74ea0eceb7653a30a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UsePooling: 0
 --- !u!114 &4842522919836821374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,6 +190,9 @@ MonoBehaviour:
   MaxSpeed: 10
   Acceleration: 1
   RotateSpeed: 50
+  ProjectilePrefab: {fileID: 7171244194856859185, guid: b7b5792bac628b44ea514d08512decc3,
+    type: 3}
+  FirePoint: {fileID: 5252177188292610298}
 --- !u!114 &8793078304205634390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,18 +216,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0081f107cec40b545910842e44d946f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2373092336535573090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6166785995390537513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bdd3cf9645643847bc099af38afe04d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!54 &8603140083293492794

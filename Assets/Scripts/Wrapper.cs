@@ -1,32 +1,31 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Wrapper : MonoBehaviour
 {
-    public List<Wrappable> Wrappables { get; private set; }
+    static public Wrapper Instance { get; private set; }
+
+    public List<Actor> Actors { get; private set; } = new List<Actor>();
     private BoxCollider boxCollider;
     private Vector2 extents;
 
 
     private void Awake()
     {
-        Wrappables = new List<Wrappable>();
+        Instance = this;
         boxCollider = GetComponent<BoxCollider>();
         extents = boxCollider.size;
     }
 
-    void Start()
-    {
-    }
-
     void Update()
     {
-        foreach (var wrappable in Wrappables)
+        foreach (var actor in Actors)
         {
-            var objectPos = wrappable.gameObject.transform.position;
-            if (!boxCollider.bounds.Contains(wrappable.transform.position))
+            if (!actor.gameObject.activeInHierarchy) continue;
+
+            var objectPos = actor.gameObject.transform.position;
+            if (!boxCollider.bounds.Contains(actor.transform.position))
             {
                 var relativePos = objectPos - gameObject.transform.position;
                 if (Math.Abs(relativePos.x) > extents.x / 2)
@@ -52,13 +51,8 @@ public class Wrapper : MonoBehaviour
                         objectPos.y += extents.y;
                     }
                 }
-                wrappable.gameObject.transform.position = objectPos;
+                actor.gameObject.transform.position = objectPos;
             }
         }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        
     }
 }

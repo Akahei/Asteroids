@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(Actor))]
 public class Asteroid : MonoBehaviour
 {
     public float minSpeed = 1;
