@@ -11,9 +11,10 @@ public class Ship : MonoBehaviour
     [Header("Weapon")]
     public GameObject ProjectilePrefab;
     public Transform FirePoint;
+    public float MaxProjectilePerSec = 10;
     
-
     Rigidbody rbody;
+    private float fireCooldown = 0;
 
     void Awake()
     {
@@ -30,9 +31,13 @@ public class Ship : MonoBehaviour
 
     public void Fire()
     {
-        var projectileObject = PoolManager.Instance.SpawnObject(ProjectilePrefab, FirePoint.position, FirePoint.rotation);
-        var projectlie = projectileObject.GetComponent<Projectile>();
-        projectlie.Init(gameObject);
+        if (Time.time > fireCooldown)
+        {
+            fireCooldown = Time.time + 1f / MaxProjectilePerSec;
+            var projectileObject = PoolManager.Instance.SpawnObject(ProjectilePrefab, FirePoint.position, FirePoint.rotation);
+            var projectlie = projectileObject.GetComponent<Projectile>();
+            projectlie.Init(gameObject);
+        }
     }
 
     public void Accelerate()
