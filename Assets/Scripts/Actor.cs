@@ -12,11 +12,11 @@ public class Actor : MonoBehaviour
 
     protected void Start()
     {
-        Wrapper.Instance.Actors.Add(this);
+        LevelBox.Instance.Actors.Add(this);
     }
 
     protected void OnDestroy()
     {
-        Wrapper.Instance.Actors.Remove(this);
+        LevelBox.Instance.Actors.Remove(this);
     }
 }

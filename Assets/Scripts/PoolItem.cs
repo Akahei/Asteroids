@@ -5,10 +5,11 @@ using UnityEngine;
 public class PoolItem : MonoBehaviour
 {
     [HideInInspector] 
-    public GameObject OriginPrefab;
+    public Object OriginPrefab;
+    public Object InstancedObject;
 
     public void ReturnToPool()
     {
-        PoolManager.Instance.ReturnToPool(gameObject);
+        PoolManager.PMInstance.ReturnToPool(this);
     }
 }

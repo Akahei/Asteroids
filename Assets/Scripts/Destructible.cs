@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class Destructible : MonoBehaviour
 {
+    public UnityAction OnDestory;
+
     PoolItem poolItem;
     void Start()
     {
@@ -12,6 +13,7 @@ public class Destructible : MonoBehaviour
 
     public void Destroy()
     {
+        if (OnDestory != null) OnDestory.Invoke();
         if (poolItem)
         {
             poolItem.ReturnToPool();

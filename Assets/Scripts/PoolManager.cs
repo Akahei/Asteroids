@@ -1,46 +1,59 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Object = UnityEngine.Object;
 
 public class PoolManager : MonoBehaviour
 {
-    static public PoolManager Instance { get; private set; }
+    static public PoolManager PMInstance { get; private set; }
 
-    Dictionary<GameObject, Queue<GameObject>> Pools = new Dictionary<GameObject, Queue<GameObject>>();
+    Dictionary<Object, Queue<Object>> Pools = new Dictionary<Object, Queue<Object>>();
 
     void Awake()
     {
-        Instance = this;
+        PMInstance = this;
     }
 
-    public GameObject GetObjectInstance(GameObject prefab, Vector3 pos, Quaternion rot)
+    public T GetInstance<T>(T prefab) where T : Object
     {
         if (!Pools.ContainsKey(prefab))
         {
-            Pools.Add(prefab, new Queue<GameObject>());
+            Pools.Add(prefab, new Queue<Object>());
         }
 
         var pool = Pools[prefab];
         if (pool.Count > 0)
         {
-            var obj = pool.Dequeue();
-            obj.transform.position = pos;
-            obj.transform.rotation = rot;
-            obj.SetActive(true);
-            return obj;
+            var instance = pool.Dequeue();
+            GetGameObject(instance).SetActive(true);
+            return instance as T;
         }
 
-        var newInstance = Instantiate(prefab, pos, rot);
-        var poolItem = newInstance.GetComponent<PoolItem>();
+        var newInstance = Instantiate(prefab);
+        var poolItem = GetGameObject(newInstance).GetComponent<PoolItem>();
         Assert.IsNotNull(poolItem);
         poolItem.OriginPrefab = prefab;
+        poolItem.InstancedObject = newInstance;
         return newInstance;
     }
 
-    public void ReturnToPool(GameObject obj)
+    public void ReturnToPool(PoolItem item)
     {
-        var actor = obj.GetComponent<PoolItem>();
-        Pools[actor.OriginPrefab].Enqueue(obj);
-        obj.SetActive(false);
+        Pools[item.OriginPrefab].Enqueue(item.InstancedObject);
+        GetGameObject(item.InstancedObject).SetActive(false);
+    }
+
+    void SetActive(Object obj, bool active)
+    {
+        GetGameObject(obj).SetActive(active);
+    }
+
+    GameObject GetGameObject(Object obj)
+    {
+        if (obj is Component component)
+        {
+            return component.gameObject;
+        }
+        return obj as GameObject;
     }
 }
