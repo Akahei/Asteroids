@@ -78,5 +78,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Asteroid_big
       objectReference: {fileID: 0}
+    - target: {fileID: 7370702346226205354, guid: fc39fa6f0be09c24493c8b155c2e8c0c,
+        type: 3}
+      propertyPath: ScorePoints
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc39fa6f0be09c24493c8b155c2e8c0c, type: 3}
