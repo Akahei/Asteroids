@@ -190,7 +190,7 @@ MonoBehaviour:
   MaxSpeed: 10
   Acceleration: 1
   RotateSpeed: 50
-  ProjectilePrefab: {fileID: 7171244194856859185, guid: b7b5792bac628b44ea514d08512decc3,
+  ProjectilePrefab: {fileID: 8464873429399332470, guid: b7b5792bac628b44ea514d08512decc3,
     type: 3}
   FirePoint: {fileID: 5252177188292610298}
   MaxProjectilePerSec: 10
@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce4a9754c5b22941b9da4e789f16b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ScorePoints: 0
 --- !u!1 &9165457774372492765
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class Ship : MonoBehaviour
     public float RotateSpeed = 100;
 
     [Header("Weapon")]
-    public GameObject ProjectilePrefab;
+    public Projectile ProjectilePrefab;
     public Transform FirePoint;
     public float MaxProjectilePerSec = 10;
     
@@ -34,11 +34,10 @@ public class Ship : MonoBehaviour
         if (Time.time > fireCooldown)
         {
             fireCooldown = Time.time + 1f / MaxProjectilePerSec;
-            var projectileObject = PoolManager.PMInstance.GetInstance(ProjectilePrefab);
-            projectileObject.transform.position = FirePoint.position;
-            projectileObject.transform.rotation = FirePoint.rotation;
-            var projectlie = projectileObject.GetComponent<Projectile>();
-            projectlie.Init(gameObject);
+            var projectile = PoolManager.Instance.GetInstance(ProjectilePrefab);
+            projectile.transform.position = FirePoint.position;
+            projectile.transform.rotation = FirePoint.rotation;
+            projectile.Init(gameObject);
         }
     }
 

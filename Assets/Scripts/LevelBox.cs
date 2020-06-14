@@ -58,24 +58,27 @@ public class LevelBox : MonoBehaviour
         }
     }
 
-    public Vector2 GetRandomPointOnEdge(float margin = 0)
+    public Vector2 GetRandomPointOnEdge()
     {
-        var margedExtents = Extents;
-        margedExtents.x -= margin;
-        margedExtents.y -= margin;
         float sideMultiplier = UE.Random.value > 0.5f ? 1f : -1f;
-        float xWeight = margedExtents.x / (margedExtents.x + margedExtents.y);
+        float xEdgeWeight = Extents.x / (Extents.x + Extents.y);
         var randomPoint = new Vector2();
-        if (xWeight < UE.Random.value)
+        if (xEdgeWeight < UE.Random.value)
         {
-            randomPoint.x = margedExtents.x * sideMultiplier;
-            randomPoint.y = UE.Random.Range(-margedExtents.y, margedExtents.y);
+            randomPoint.x = Extents.x * sideMultiplier;
+            randomPoint.y = UE.Random.Range(-Extents.y, Extents.y);
         }
         else
         {
-            randomPoint.x = UE.Random.Range(-margedExtents.x, margedExtents.x);
-            randomPoint.y = margedExtents.y * sideMultiplier;
+            randomPoint.x = UE.Random.Range(-Extents.x, Extents.x);
+            randomPoint.y = Extents.y * sideMultiplier;
         }
         return randomPoint;
+    }
+
+    public Vector2 GetRandomPointOnLeftRightEdge(float marginFromTopBot = 0)
+    {
+        var maxY = Extents.y * (1 - marginFromTopBot);
+        return new Vector2(UE.Random.value > 0.5f ?  Extents.x : -Extents.y, UE.Random.Range(-maxY, maxY));
     }
 }

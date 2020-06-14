@@ -10,6 +10,6 @@ public class PoolItem : MonoBehaviour
 
     public void ReturnToPool()
     {
-        PoolManager.PMInstance.ReturnToPool(this);
+        PoolManager.Instance.ReturnToPool(this);
     }
 }

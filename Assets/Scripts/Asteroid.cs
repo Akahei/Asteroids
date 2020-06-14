@@ -40,7 +40,7 @@ public class Asteroid : MonoBehaviour
             float angle = myAngle - fullArc / 2;
             for (int i = 0; i < SmallerAsterodsNum; i++, angle += AngleBetweenSmallerAsteroids)
             {
-                var asteroid = PoolManager.PMInstance.GetInstance(SmallerAsteroidPrefab);
+                var asteroid = PoolManager.Instance.GetInstance(SmallerAsteroidPrefab);
                 asteroid.Init(transform.position, angle, speed);
             }
         }

@@ -5,13 +5,13 @@ using Object = UnityEngine.Object;
 
 public class PoolManager : MonoBehaviour
 {
-    static public PoolManager PMInstance { get; private set; }
+    static public PoolManager Instance { get; private set; }
 
     Dictionary<Object, Queue<Object>> Pools = new Dictionary<Object, Queue<Object>>();
 
     void Awake()
     {
-        PMInstance = this;
+        Instance = this;
     }
 
     public T GetInstance<T>(T prefab) where T : Object

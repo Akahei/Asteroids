@@ -8,10 +8,21 @@ public class GameManager : MonoBehaviour
     public int AsteroidsIncremment = 1;
     public Asteroid AsteroidPrefab;
 
+    [Header("Ufo")]
+    public Ufo UfoPrefab;
+    public float UfoMinCooldoww = 20;
+    public float UfoMaxCooldown = 40;
+    [Tooltip("Минимальное растояние UFO от верхней и нижней границ при спауне в процентах")]
+    public float UfoMinDistanceFromEdge = 0.2f;
+
     public int Score {get; private set;}
+    public Ship PlayerShip {get; private set;}
 
     int nextRoundAsteroidsNum;
     List<Asteroid> asteroidsList = new List<Asteroid>();
+
+    Ufo ufo = null;
+    float NextUfoSpawnTime;
 
     static public GameManager Instance;
 
@@ -20,14 +31,27 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    void Update()
+    {
+        if (ufo == null && Time.time >= NextUfoSpawnTime)
+        {
+            ufo = Instantiate(UfoPrefab);
+            ufo.transform.position = LevelBox.Instance.GetRandomPointOnLeftRightEdge(UfoMinDistanceFromEdge);
+            ufo.transform.rotation = Quaternion.Euler(0, 0, Random.value > 0.5f ? -90 : 90);
+            ScheduleNextUfo();
+        }
+    }
+
     void Start()
     {
+        PlayerShip = GameObject.FindObjectOfType<Ship>();
         RestartGame();
     }
 
     void RestartGame()
     {
         nextRoundAsteroidsNum = StartAsteroidNum;
+        ScheduleNextUfo();
         StartRound();
     }
 
@@ -41,10 +65,12 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < num; i++)
         {
-            var asteroid = PoolManager.PMInstance.GetInstance(AsteroidPrefab);
+            var asteroid = PoolManager.Instance.GetInstance(AsteroidPrefab);
             asteroid.Init(LevelBox.Instance.GetRandomPointOnEdge(), Random.Range(0f, 360f), asteroid.GetRandomSpeed());
         }
     }
+
+    void ScheduleNextUfo() => NextUfoSpawnTime = Time.time + Random.Range(UfoMinCooldoww, UfoMaxCooldown);
 
     public void RegisterAsteroid(Asteroid asteroid)
     {
@@ -54,11 +80,19 @@ public class GameManager : MonoBehaviour
     public void OnDestructibleDestroyed(Destructible destructible)
     {
         Score += destructible.ScorePoints;
-        var asteroid = destructible.GetComponent<Asteroid>();
-        if (asteroid != null)
+        if (ufo && ufo.gameObject == destructible.gameObject)
         {
-            asteroidsList.Remove(asteroid);
-            if (asteroidsList.Count == 0) StartRound();
+            ufo = null;
+            ScheduleNextUfo();
+        }
+        else
+        {
+            var asteroid = destructible.GetComponent<Asteroid>();
+            if (asteroid != null)
+            {
+                asteroidsList.Remove(asteroid);
+                if (asteroidsList.Count == 0) StartRound();
+            }
         }
     }
 }
