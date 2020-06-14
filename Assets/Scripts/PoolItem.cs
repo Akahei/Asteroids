@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolObject : MonoBehaviour
+public class PoolItem : MonoBehaviour
 {
     [HideInInspector] 
     public GameObject OriginPrefab;

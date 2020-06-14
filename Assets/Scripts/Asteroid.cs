@@ -5,6 +5,7 @@ public class Asteroid : MonoBehaviour
 {
     public float minSpeed = 1;
     public float maxSpeed = 10;
+    public GameObject SmallerAsteroidPrefab;
 
     Rigidbody rbody;
 

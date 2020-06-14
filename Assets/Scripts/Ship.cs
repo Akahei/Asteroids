@@ -34,7 +34,7 @@ public class Ship : MonoBehaviour
         if (Time.time > fireCooldown)
         {
             fireCooldown = Time.time + 1f / MaxProjectilePerSec;
-            var projectileObject = PoolManager.Instance.SpawnObject(ProjectilePrefab, FirePoint.position, FirePoint.rotation);
+            var projectileObject = PoolManager.Instance.GetObjectInstance(ProjectilePrefab, FirePoint.position, FirePoint.rotation);
             var projectlie = projectileObject.GetComponent<Projectile>();
             projectlie.Init(gameObject);
         }

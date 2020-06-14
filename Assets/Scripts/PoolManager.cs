@@ -13,7 +13,7 @@ public class PoolManager : MonoBehaviour
         Instance = this;
     }
 
-    public GameObject SpawnObject(GameObject prefab, Vector3 pos, Quaternion rot)
+    public GameObject GetObjectInstance(GameObject prefab, Vector3 pos, Quaternion rot)
     {
         if (!Pools.ContainsKey(prefab))
         {
@@ -30,18 +30,17 @@ public class PoolManager : MonoBehaviour
             return obj;
         }
 
-        var newInstance = Instantiate(prefab, pos, rot);;
-        var instanceActor = newInstance.GetComponent<PoolObject>();
-        Assert.IsNotNull(instanceActor);
-        instanceActor.OriginPrefab = prefab;
+        var newInstance = Instantiate(prefab, pos, rot);
+        var poolItem = newInstance.GetComponent<PoolItem>();
+        Assert.IsNotNull(poolItem);
+        poolItem.OriginPrefab = prefab;
         return newInstance;
     }
 
     public void ReturnToPool(GameObject obj)
     {
-        var actor = obj.GetComponent<PoolObject>();
+        var actor = obj.GetComponent<PoolItem>();
         Pools[actor.OriginPrefab].Enqueue(obj);
         obj.SetActive(false);
     }
-
 }

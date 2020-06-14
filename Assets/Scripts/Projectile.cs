@@ -10,13 +10,13 @@ public class Projectile : MonoBehaviour
 
     GameObject owner;
     Rigidbody rbody;
-    Actor actor;
+    PoolItem poolItem;
     float destroyTime;
     Vector3 velocity;
 
     void Awake()
     {
-        actor = GetComponent<Actor>();
+        poolItem = GetComponent<PoolItem>();
         rbody = GetComponent<Rigidbody>();
     }
 
@@ -31,18 +31,20 @@ public class Projectile : MonoBehaviour
     {
         if (Time.time >= destroyTime)
         {
-            actor.Die();
+            Destroy();
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponentInParent<Projectile>() != null) return;
+        var destructible = other.GetComponentInParent<Destructible>();
+        if (destructible == null || destructible.gameObject == owner) return;
+        destructible.Destroy();
+        Destroy();
+    }
 
-        var otherActor = other.GetComponentInParent<Actor>();
-        if (otherActor == null || otherActor.gameObject == owner) return;
-        otherActor.Die();
-
-        actor.Die();
+    void Destroy()
+    {
+        if (poolItem != null) poolItem.ReturnToPool();
     }
 }
