@@ -188,9 +188,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e8535ef2d92504cbb82458ea319c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxSpeed: 10
+  SpawnInvulnerableTime: 3
+  MaxSpeed: 3
   Acceleration: 1
-  RotateSpeed: 50
+  RotateSpeed: 180
   ProjectilePrefab: {fileID: 8464873429399332470, guid: b7b5792bac628b44ea514d08512decc3,
     type: 3}
   FirePoint: {fileID: 5252177188292610298}

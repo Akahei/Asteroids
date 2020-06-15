@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Player")]
+    public Ship PlayerShipPrefab;
+    public float RespawnTime = 2;
+
     [Header("Asteroids")]
     public int StartAsteroidNum = 2;
     public int AsteroidsIncremment = 1;
@@ -22,7 +26,9 @@ public class GameManager : MonoBehaviour
     List<Asteroid> asteroidsList = new List<Asteroid>();
 
     Ufo ufo = null;
-    float NextUfoSpawnTime;
+    float nextUfoSpawnTime;
+
+    float playerRespawnTime;
 
     static public GameManager Instance;
 
@@ -33,7 +39,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (ufo == null && Time.time >= NextUfoSpawnTime)
+        if (PlayerShip == null && Time.time >= playerRespawnTime)
+        {
+            SpawnPlayer();
+        }
+
+        if (ufo == null && Time.time >= nextUfoSpawnTime)
         {
             ufo = Instantiate(UfoPrefab);
             ufo.transform.position = LevelBox.Instance.GetRandomPointOnLeftRightEdge(UfoMinDistanceFromEdge);
@@ -44,13 +55,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        PlayerShip = GameObject.FindObjectOfType<Ship>();
         RestartGame();
     }
 
     void RestartGame()
     {
         nextRoundAsteroidsNum = StartAsteroidNum;
+        SpawnPlayer();
         ScheduleNextUfo();
         StartRound();
     }
@@ -59,6 +70,11 @@ public class GameManager : MonoBehaviour
     {
         SpawnAsteroids(nextRoundAsteroidsNum);
         nextRoundAsteroidsNum += AsteroidsIncremment;
+    }
+
+    void SpawnPlayer()
+    {
+        PlayerShip = Instantiate(PlayerShipPrefab);
     }
 
     void SpawnAsteroids(int num)
@@ -70,7 +86,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void ScheduleNextUfo() => NextUfoSpawnTime = Time.time + Random.Range(UfoMinCooldoww, UfoMaxCooldown);
+    void ScheduleNextUfo() => nextUfoSpawnTime = Time.time + Random.Range(UfoMinCooldoww, UfoMaxCooldown);
 
     public void RegisterAsteroid(Asteroid asteroid)
     {
@@ -80,7 +96,13 @@ public class GameManager : MonoBehaviour
     public void OnDestructibleDestroyed(Destructible destructible)
     {
         Score += destructible.ScorePoints;
-        if (ufo && ufo.gameObject == destructible.gameObject)
+        if (PlayerShip && PlayerShip.gameObject == destructible.gameObject)
+        {
+            PlayerShip = null;
+            playerRespawnTime = Time.time + RespawnTime;
+
+        }
+        else if (ufo && ufo.gameObject == destructible.gameObject)
         {
             ufo = null;
             ScheduleNextUfo();
