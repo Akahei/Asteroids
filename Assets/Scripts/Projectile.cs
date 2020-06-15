@@ -44,6 +44,9 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        var asteroid = other.GetComponentInParent<Asteroid>();
+        if (asteroid != null) asteroid.Break();
+        
         var destructible = other.GetComponentInParent<Destructible>();
         if (destructible == null || destructible.gameObject == owner) return;
         destructible.Destroy();
@@ -52,6 +55,13 @@ public class Projectile : MonoBehaviour
 
     void Destroy()
     {
-        if (poolItem != null) poolItem.ReturnToPool();
+        if (poolItem != null)
+        {
+            poolItem.ReturnToPool();
+        } 
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

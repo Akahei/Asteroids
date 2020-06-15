@@ -12,12 +12,13 @@ public class Asteroid : MonoBehaviour
     public float AngleBetweenSmallerAsteroids = 90;
 
     Rigidbody rbody;
+    Destructible destructible;
 
     void Awake()
     {
         rbody = GetComponent<Rigidbody>();
-        var destructible = GetComponent<Destructible>();
-        destructible.OnDestory += OnDestructibleDestory;
+        destructible = GetComponent<Destructible>();
+        //destructible.OnDestory += OnDestructibleDestory;
     }
 
     public void Init(Vector2 pos, float rot, float speed)
@@ -30,19 +31,28 @@ public class Asteroid : MonoBehaviour
 
     public float GetRandomSpeed() => Random.Range(minSpeed, maxSpeed);
 
-    void OnDestructibleDestory()
+    public void Break() 
     {
-        if (SmallerAsteroidPrefab != null)
+        if (SmallerAsteroidPrefab == null) return;
+        float speed = SmallerAsteroidPrefab.GetRandomSpeed();
+        float myAngle = transform.rotation.eulerAngles.z;
+        float fullArc = AngleBetweenSmallerAsteroids * (SmallerAsterodsNum - 1);
+        float angle = myAngle - fullArc / 2;
+        for (int i = 0; i < SmallerAsterodsNum; i++, angle += AngleBetweenSmallerAsteroids)
         {
-            float speed = SmallerAsteroidPrefab.GetRandomSpeed();
-            float myAngle = transform.rotation.eulerAngles.z;
-            float fullArc = AngleBetweenSmallerAsteroids * (SmallerAsterodsNum - 1);
-            float angle = myAngle - fullArc / 2;
-            for (int i = 0; i < SmallerAsterodsNum; i++, angle += AngleBetweenSmallerAsteroids)
-            {
-                var asteroid = PoolManager.Instance.GetInstance(SmallerAsteroidPrefab);
-                asteroid.Init(transform.position, angle, speed);
-            }
+            var asteroid = PoolManager.Instance.GetInstance(SmallerAsteroidPrefab);
+            asteroid.Init(transform.position, angle, speed);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponentInParent<Asteroid>() != null) return;
+
+        var otherDestructible = other.GetComponentInParent<Destructible>();
+        if (otherDestructible != null) 
+        {
+            otherDestructible.Destroy();
         }
     }
 }
