@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 5253617649953102961}
   - component: {fileID: 8603140083293492794}
   - component: {fileID: 1563966858408979069}
+  - component: {fileID: 3826129328853481998}
   m_Layer: 0
   m_Name: PlayerShip
   m_TagString: Untagged
@@ -249,6 +250,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ScorePoints: 0
+--- !u!114 &3826129328853481998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6166785995390537513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a89347d1d128b648a9584c01533fa03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BlinkPeriod: 0.25
 --- !u!1 &9165457774372492765
 GameObject:
   m_ObjectHideFlags: 0

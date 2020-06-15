@@ -3,6 +3,8 @@
 [RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(Actor))]
 public class Ship : MonoBehaviour
 {
+    public float SpawnInvulnerableTime = 3;
+
     [Header("Movement")]
     public float MaxSpeed = 10;
     public float Acceleration = 1;
@@ -15,19 +17,41 @@ public class Ship : MonoBehaviour
     public Color ProjectileColor;
     
     Rigidbody rbody;
-    private float fireCooldown = 0;
+    BlinkAnimation blinkAnimation;
+    float fireCooldown = 0;
+    bool isInvulnerable = false;
+    float invulnerableTimeEnd = 0;
 
     void Awake()
     {
         rbody = GetComponent<Rigidbody>();
+        blinkAnimation = GetComponent<BlinkAnimation>();
     }
 
     void Start()
     {
+        isInvulnerable = true;
+        invulnerableTimeEnd = Time.time + SpawnInvulnerableTime;
+        SetEnableCollision(false);
+        if (blinkAnimation) blinkAnimation.enabled = true;
     }
 
     void Update()
     {
+        if (isInvulnerable && Time.time > invulnerableTimeEnd)
+        {
+            isInvulnerable = false;
+            SetEnableCollision(true);
+            if (blinkAnimation) blinkAnimation.enabled = false;
+        }
+    }
+
+    private void SetEnableCollision(bool enable)
+    {
+        foreach(var collider in GetComponentsInChildren<Collider>())
+        {
+            collider.enabled = enable;
+        }
     }
 
     public void Fire()
