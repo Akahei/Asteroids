@@ -12,6 +12,7 @@ public class Ship : MonoBehaviour
     public Projectile ProjectilePrefab;
     public Transform FirePoint;
     public float MaxProjectilePerSec = 10;
+    public Color ProjectileColor;
     
     Rigidbody rbody;
     private float fireCooldown = 0;
@@ -37,7 +38,7 @@ public class Ship : MonoBehaviour
             var projectile = PoolManager.Instance.GetInstance(ProjectilePrefab);
             projectile.transform.position = FirePoint.position;
             projectile.transform.rotation = FirePoint.rotation;
-            projectile.Init(gameObject);
+            projectile.Init(gameObject, ProjectileColor);
         }
     }
 

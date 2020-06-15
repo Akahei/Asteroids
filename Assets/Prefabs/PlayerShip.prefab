@@ -194,6 +194,7 @@ MonoBehaviour:
     type: 3}
   FirePoint: {fileID: 5252177188292610298}
   MaxProjectilePerSec: 10
+  ProjectileColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &8793078304205634390
 MonoBehaviour:
   m_ObjectHideFlags: 0

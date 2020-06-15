@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public Ufo UfoPrefab;
     public float UfoMinCooldoww = 20;
     public float UfoMaxCooldown = 40;
-    [Tooltip("Минимальное растояние UFO от верхней и нижней границ при спауне в процентах")]
+    [Tooltip("Минимальное растояние от верхней/нижней границы в процентах при спауне UFO")]
     public float UfoMinDistanceFromEdge = 0.2f;
 
     public int Score {get; private set;}

@@ -81,6 +81,7 @@ MonoBehaviour:
     type: 3}
   MinFireCooldown: 2
   MaxFireCooldown: 5
+  ProjectileColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &7770410227812742
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class Ufo : MonoBehaviour
     public Projectile ProjectilePrefab;
     public float MinFireCooldown = 2;
     public float MaxFireCooldown = 5;
+    public Color ProjectileColor;
 
     float nextShootTime;
     Ship playerShip => GameManager.Instance.PlayerShip;
@@ -35,7 +36,7 @@ public class Ufo : MonoBehaviour
             var projectile = PoolManager.Instance.GetInstance(ProjectilePrefab);
             projectile.transform.position = transform.position;
             projectile.transform.rotation = Quaternion.LookRotation(Vector3.forward, fireDirection);
-            projectile.Init(gameObject);
+            projectile.Init(gameObject, ProjectileColor);
         }
         ScheduleNextFire();
     }
