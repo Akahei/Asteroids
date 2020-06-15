@@ -20,17 +20,15 @@ public class Projectile : MonoBehaviour
         rbody = GetComponent<Rigidbody>();
     }
 
-    public void Init(GameObject projectileOwner, Color color = default)
+    public void Init(GameObject projectileOwner, MaterialPropertyBlock materialPropBlock = null)
     {
         owner = projectileOwner;
         destroyTime = Time.time + LifeTime;
         rbody.velocity = transform.up * Speed;
 
-        MaterialPropertyBlock rendBlock = new MaterialPropertyBlock();
-        rendBlock.SetColor("_Color", color);
         foreach (var rend in GetComponentsInChildren<Renderer>())
         {
-            rend.SetPropertyBlock(rendBlock);
+            rend.SetPropertyBlock(materialPropBlock);
         }
     }
 

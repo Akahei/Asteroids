@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
         {
             ufo = Instantiate(UfoPrefab);
             ufo.transform.position = LevelBox.Instance.GetRandomPointOnLeftRightEdge(UfoMinDistanceFromEdge);
-            ufo.transform.rotation = Quaternion.Euler(0, 0, Random.value > 0.5f ? -90 : 90);
+            ufo.transform.rotation = Quaternion.Euler(0, 0, ufo.transform.position.x > 0 ? -90 : 90);
             ScheduleNextUfo();
         }
     }

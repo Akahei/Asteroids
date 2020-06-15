@@ -21,6 +21,7 @@ public class Ship : MonoBehaviour
     float fireCooldown = 0;
     bool isInvulnerable = false;
     float invulnerableTimeEnd = 0;
+    MaterialPropertyBlock projectileColorMPB;
 
     void Awake()
     {
@@ -34,6 +35,9 @@ public class Ship : MonoBehaviour
         invulnerableTimeEnd = Time.time + SpawnInvulnerableTime;
         SetEnableCollision(false);
         if (blinkAnimation) blinkAnimation.enabled = true;
+
+        projectileColorMPB = new MaterialPropertyBlock();
+        projectileColorMPB.SetColor("_Color", ProjectileColor);
     }
 
     void Update()
@@ -62,7 +66,7 @@ public class Ship : MonoBehaviour
             var projectile = PoolManager.Instance.GetInstance(ProjectilePrefab);
             projectile.transform.position = FirePoint.position;
             projectile.transform.rotation = FirePoint.rotation;
-            projectile.Init(gameObject, ProjectileColor);
+            projectile.Init(gameObject, projectileColorMPB);
         }
     }
 

@@ -13,12 +13,15 @@ public class Ufo : MonoBehaviour
 
     float nextShootTime;
     Ship playerShip => GameManager.Instance.PlayerShip;
+    MaterialPropertyBlock projectileColorMPB;
 
     void Start()
     {
         ScheduleNextFire();
         var rbody = GetComponent<Rigidbody>();   
         rbody.velocity = transform.up * Speed;
+        projectileColorMPB = new MaterialPropertyBlock();
+        projectileColorMPB.SetColor("_Color", ProjectileColor);
     }
 
     void ScheduleNextFire() => nextShootTime = Time.time + Random.Range(MinFireCooldown, MaxFireCooldown);
@@ -36,7 +39,7 @@ public class Ufo : MonoBehaviour
             var projectile = PoolManager.Instance.GetInstance(ProjectilePrefab);
             projectile.transform.position = transform.position;
             projectile.transform.rotation = Quaternion.LookRotation(Vector3.forward, fireDirection);
-            projectile.Init(gameObject, ProjectileColor);
+            projectile.Init(gameObject, projectileColorMPB);
         }
         ScheduleNextFire();
     }

@@ -79,6 +79,6 @@ public class LevelBox : MonoBehaviour
     public Vector2 GetRandomPointOnLeftRightEdge(float marginFromTopBot = 0)
     {
         var maxY = Extents.y * (1 - marginFromTopBot);
-        return new Vector2(UE.Random.value > 0.5f ?  Extents.x : -Extents.y, UE.Random.Range(-maxY, maxY));
+        return new Vector2(UE.Random.value > 0.5f ?  Extents.x : -Extents.x, UE.Random.Range(-maxY, maxY));
     }
 }
