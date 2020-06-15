@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
 public class Destructible : MonoBehaviour
 {
-    public UnityAction OnDestory;
     public int ScorePoints;
 
     PoolItem poolItem;
@@ -15,7 +13,6 @@ public class Destructible : MonoBehaviour
     public void Destroy()
     {
         GameManager.Instance.OnDestructibleDestroyed(this);
-        if (OnDestory != null) OnDestory.Invoke();
         if (poolItem)
         {
             poolItem.ReturnToPool();

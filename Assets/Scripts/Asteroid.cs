@@ -18,7 +18,6 @@ public class Asteroid : MonoBehaviour
     {
         rbody = GetComponent<Rigidbody>();
         destructible = GetComponent<Destructible>();
-        //destructible.OnDestory += OnDestructibleDestory;
     }
 
     public void Init(Vector2 pos, float rot, float speed)
@@ -53,6 +52,7 @@ public class Asteroid : MonoBehaviour
         if (otherDestructible != null) 
         {
             otherDestructible.Destroy();
+            destructible.Destroy();
         }
     }
 }
