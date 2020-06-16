@@ -2,6 +2,8 @@
 
 public class Destructible : MonoBehaviour, IResetable
 {
+    public GameObject DestroyFXPrefab;
+
     PoolItem poolItem;
     protected virtual void Awake()
     {
@@ -10,6 +12,10 @@ public class Destructible : MonoBehaviour, IResetable
 
     public void Destroy()
     {
+        if (DestroyFXPrefab != null)
+        {
+            Instantiate(DestroyFXPrefab, transform.position, transform.rotation);
+        } 
         GameManager.Instance.OnDestructibleDestroyed(this);
         if (poolItem != null)
         {
@@ -19,6 +25,7 @@ public class Destructible : MonoBehaviour, IResetable
         {
             Destroy(gameObject);
         }
+        
     }
 
     public void ResetObject()

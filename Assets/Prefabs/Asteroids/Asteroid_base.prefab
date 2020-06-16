@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 151a9c03ab8842b428136289ae60524d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DestroyFX: {fileID: 0}
   minSpeed: 1
   maxSpeed: 5
   SmallerAsteroidPrefab: {fileID: 0}
@@ -171,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce4a9754c5b22941b9da4e789f16b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DestroyFX: {fileID: 0}
 --- !u!54 &1915242943255671674
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -200,7 +202,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OriginPrefab: {fileID: 0}
-  InstancedObject: {fileID: 0}
+  InstancedObject: {fileID: 2372268242961866790, guid: cdad97bbc3b2ad044916c27bfa8f8cfa,
+    type: 3}
 --- !u!114 &1607617333500107684
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -82,6 +82,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 2604193183775892525, guid: fc39fa6f0be09c24493c8b155c2e8c0c,
+        type: 3}
+      propertyPath: DestroyFXPrefab
+      value: 
+      objectReference: {fileID: 2372268242961866790, guid: dc1ffa937bfe989489321ded72054bb0,
+        type: 3}
     - target: {fileID: 6286438540448741697, guid: fc39fa6f0be09c24493c8b155c2e8c0c,
         type: 3}
       propertyPath: m_Name
@@ -92,5 +98,11 @@ PrefabInstance:
       propertyPath: ScorePoints
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 8370473827091669828, guid: fc39fa6f0be09c24493c8b155c2e8c0c,
+        type: 3}
+      propertyPath: InstancedObject
+      value: 
+      objectReference: {fileID: 2372268242961866790, guid: dc1ffa937bfe989489321ded72054bb0,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc39fa6f0be09c24493c8b155c2e8c0c, type: 3}

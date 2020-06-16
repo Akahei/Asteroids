@@ -6,6 +6,7 @@ public class PoolItem : MonoBehaviour
 {
     [HideInInspector] 
     public Object OriginPrefab;
+    [HideInInspector]
     public Object InstancedObject;
 
     public void ReturnToPool()

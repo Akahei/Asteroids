@@ -3,6 +3,7 @@
 [RequireComponent(typeof(Rigidbody))]
 public class Ship : Destructible
 {
+
     public float SpawnInvulnerableTime = 3;
 
     [Header("Movement")]
@@ -11,10 +12,10 @@ public class Ship : Destructible
     public float RotateSpeed = 100;
 
     [Header("Weapon")]
-    public Projectile ProjectilePrefab;
-    public Transform FirePoint;
+    public Cannon ShipCannon;
     public float MaxProjectilePerSec = 10;
-    public Color ProjectileColor;
+
+    public AudioSource AccelerationSFX;
     
     Rigidbody rbody;
     BlinkAnimation blinkAnimation;
@@ -36,9 +37,6 @@ public class Ship : Destructible
         invulnerableTimeEnd = Time.time + SpawnInvulnerableTime;
         SetEnableCollision(false);
         if (blinkAnimation) blinkAnimation.enabled = true;
-
-        projectileColorMPB = new MaterialPropertyBlock();
-        projectileColorMPB.SetColor("_Color", ProjectileColor);
     }
 
     void Update()
@@ -64,16 +62,14 @@ public class Ship : Destructible
         if (Time.time > fireCooldown)
         {
             fireCooldown = Time.time + 1f / MaxProjectilePerSec;
-            var projectile = PoolManager.Instance.GetInstance(ProjectilePrefab);
-            projectile.transform.position = FirePoint.position;
-            projectile.transform.rotation = FirePoint.rotation;
-            projectile.Init(gameObject, projectileColorMPB);
+            ShipCannon.Fire(gameObject);
         }
     }
 
     public void Accelerate()
     {
         rbody.velocity = Vector3.ClampMagnitude(rbody.velocity + transform.up * Acceleration * Time.deltaTime, MaxSpeed);
+        if (!AccelerationSFX.isPlaying) AccelerationSFX.Play();
     }
 
     public void Rotate(float direction)
