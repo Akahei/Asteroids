@@ -67,8 +67,8 @@ MonoBehaviour:
     type: 3}
   UfoPrefab: {fileID: 6720862871169777787, guid: 8c4720cd0d9a99e48b462a1e62d8d62e,
     type: 3}
-  UfoMinCooldoww: 1
-  UfoMaxCooldown: 2
+  UfoMinCooldoww: 20
+  UfoMaxCooldown: 40
   UfoMinDistanceFromEdge: 0.2
 --- !u!114 &2747676216888340275
 MonoBehaviour:

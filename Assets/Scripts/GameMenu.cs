@@ -53,6 +53,9 @@ public class GameMenu : MonoBehaviour
         Time.timeScale = active ? 0f : 1f;
         InputHandler.Instance.ProcessInput = !active;
         ContinueButton.SetActive(GameManager.Instance.GameStarted);
+        bool showCursor = active || (InputHandler.Instance.InputType == PlayerInputType.MouseAndKeyboard);
+        Cursor.visible = showCursor;
+        Cursor.lockState = showCursor ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
     public void SwitchControlType()
