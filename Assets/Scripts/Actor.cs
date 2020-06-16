@@ -3,9 +3,6 @@ using UnityEngine.Events;
 
 public class Actor : MonoBehaviour
 {
-    public UnityAction OnDied;
-    private PoolItem poolItem;
-
     void Awake()
     {
     }

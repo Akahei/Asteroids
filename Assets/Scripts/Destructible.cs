@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 
-public class Destructible : MonoBehaviour
+public class Destructible : MonoBehaviour, IResetable
 {
-    public int ScorePoints;
-
     PoolItem poolItem;
-    void Start()
+    void Awake()
     {
         poolItem = GetComponent<PoolItem>();
     }
@@ -21,5 +19,20 @@ public class Destructible : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void ResetObject()
+    {
+        Destroy();
+    }
+
+    protected virtual void OnTriggerEnter(Collider other)
+    {
+        var otherDestr = other.GetComponentInParent<Destructible>();
+        if (otherDestr != null)
+        {
+            otherDestr.Destroy();
+            Destroy();
+        } 
     }
 }

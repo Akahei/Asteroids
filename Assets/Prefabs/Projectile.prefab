@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3671975934506982767}
   - component: {fileID: 3591690093850211079}
   - component: {fileID: 4792431376265242344}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,10 +102,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4179456107582627814}
-  - component: {fileID: 8464873429399332470}
   - component: {fileID: 4145476054854258263}
   - component: {fileID: 4381056035595766311}
   - component: {fileID: 4944578157362609418}
+  - component: {fileID: 8420991347050208537}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -128,20 +128,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8464873429399332470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7171244194856859185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b34d98bc0cb42e409d0452ef86aa2fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LifeTime: 5
-  Speed: 10
 --- !u!54 &4145476054854258263
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -171,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OriginPrefab: {fileID: 0}
+  InstancedObject: {fileID: 0}
 --- !u!114 &4944578157362609418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,3 +170,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04378ca7e87ead74ea0eceb7653a30a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8420991347050208537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7171244194856859185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b34d98bc0cb42e409d0452ef86aa2fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LifeTime: 5
+  Speed: 6

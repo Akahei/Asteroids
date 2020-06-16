@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(Actor))]
-public class Asteroid : MonoBehaviour
+[RequireComponent(typeof(Rigidbody))]
+public class Asteroid : Destructible
 {
     [Header("Speed")]
     public float minSpeed = 1;
@@ -41,18 +41,6 @@ public class Asteroid : MonoBehaviour
         {
             var asteroid = PoolManager.Instance.GetInstance(SmallerAsteroidPrefab);
             asteroid.Init(transform.position, angle, speed);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponentInParent<Asteroid>() != null) return;
-
-        var otherDestructible = other.GetComponentInParent<Destructible>();
-        if (otherDestructible != null) 
-        {
-            otherDestructible.Destroy();
-            destructible.Destroy();
         }
     }
 }

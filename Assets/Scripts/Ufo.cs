@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(Actor))]
-public class Ufo : MonoBehaviour
+[RequireComponent(typeof(Rigidbody))]
+public class Ufo : Destructible
 {
     public float Speed = 2;
 

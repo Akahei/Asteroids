@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(Actor))]
-public class Projectile : MonoBehaviour
+[RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(PoolItem))]
+public class Projectile : MonoBehaviour, IResetable
 {
     public float LifeTime = 5;
     public float Speed;
@@ -9,8 +9,9 @@ public class Projectile : MonoBehaviour
     public GameObject Owner { get; private set; }
 
     GameObject owner;
-    Rigidbody rbody;
+    bool ownerIsPlayer = false;
     PoolItem poolItem;
+    Rigidbody rbody;
     float destroyTime;
     Vector3 velocity;
 
@@ -23,6 +24,7 @@ public class Projectile : MonoBehaviour
     public void Init(GameObject projectileOwner, MaterialPropertyBlock materialPropBlock = null)
     {
         owner = projectileOwner;
+        ownerIsPlayer = GameManager.Instance.PlayerShip.gameObject == projectileOwner;
         destroyTime = Time.time + LifeTime;
         rbody.velocity = transform.up * Speed;
 
@@ -40,26 +42,28 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    public void ResetObject()
     {
-        var asteroid = other.GetComponentInParent<Asteroid>();
-        if (asteroid != null) asteroid.Break();
-        
-        var destructible = other.GetComponentInParent<Destructible>();
-        if (destructible == null || destructible.gameObject == owner) return;
-        destructible.Destroy();
         Destroy();
     }
 
-    void Destroy()
+    void Destroy() => poolItem.ReturnToPool();
+    
+    void OnTriggerEnter(Collider other)
     {
-        if (poolItem != null)
+        var otherDest = other.GetComponentInParent<Destructible>();
+        if (otherDest != null) 
         {
-            poolItem.ReturnToPool();
-        } 
-        else
-        {
-            Destroy(gameObject);
+            var asteroid = otherDest as Asteroid;
+            if (asteroid != null)
+            {
+                asteroid.Break();
+            }
+            if (owner != otherDest.gameObject)
+            {
+                otherDest.Destroy();
+                Destroy();
+            }
         }
     }
 }

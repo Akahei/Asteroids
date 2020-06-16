@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -66,6 +67,11 @@ public class GameManager : MonoBehaviour
 
     public void NewGame()
     {
+        GameStarted = false;
+        foreach(var resetable in FindObjectsOfType<MonoBehaviour>().OfType<IResetable>())
+        {
+            resetable.ResetObject();
+        }
         GameStarted = true;
         SetScore(0);
         SetPlayerLifes(Lifes);
@@ -123,10 +129,13 @@ public class GameManager : MonoBehaviour
 
     public void OnDestructibleDestroyed(Destructible destructible)
     {
-        if (destructible.ScorePoints > 0)
+        if (!GameStarted) return;
+
+        var scoreObject = destructible.GetComponent<ScoreObject>();
+        if (scoreObject && scoreObject.ScorePoints > 0)
         {
             // возможно очки далжны начисляться только если сам игрок уничтожил обьект
-            SetScore(Score + destructible.ScorePoints);
+            SetScore(Score + scoreObject.ScorePoints);
         }
         if (PlayerShip && PlayerShip.gameObject == destructible.gameObject)
         {

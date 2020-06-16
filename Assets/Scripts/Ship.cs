@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(Actor))]
-public class Ship : MonoBehaviour
+[RequireComponent(typeof(Rigidbody))]
+public class Ship : Destructible
 {
     public float SpawnInvulnerableTime = 3;
 
