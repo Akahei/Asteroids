@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
     [Header("Player")]
     public Ship PlayerShipPrefab;
     public float RespawnTime = 2;
+    public int Lifes = 5;
 
     [Header("Asteroids")]
     public int StartAsteroidNum = 2;
@@ -19,16 +21,23 @@ public class GameManager : MonoBehaviour
     [Tooltip("Минимальное растояние от верхней/нижней границы в процентах при спауне UFO")]
     public float UfoMinDistanceFromEdge = 0.2f;
 
-    public int Score {get; private set;}
+    public int Score {get; private set;} = 0;
+    public int CurrentPlayerLifes {get; private set;}
     public Ship PlayerShip {get; private set;}
+    public bool GameStarted {get; private set;}
+
+    public UnityAction<int> OnScoreChanged;
+    public UnityAction<int> OnLifesChanged;
+    public UnityAction OnGameStarted;
+    public UnityAction OnGameOver;
 
     int nextRoundAsteroidsNum;
     List<Asteroid> asteroidsList = new List<Asteroid>();
 
     Ufo ufo = null;
-    float nextUfoSpawnTime;
+    float nextUfoSpawnTime = float.MaxValue;
 
-    float playerRespawnTime;
+    float playerRespawnTime = float.MaxValue;
 
     static public GameManager Instance;
 
@@ -39,6 +48,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (!GameStarted) return;
+
         if (PlayerShip == null && Time.time >= playerRespawnTime)
         {
             SpawnPlayer();
@@ -53,17 +64,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Start()
+    public void NewGame()
     {
-        RestartGame();
-    }
-
-    void RestartGame()
-    {
+        GameStarted = true;
+        SetScore(0);
+        SetPlayerLifes(Lifes);
         nextRoundAsteroidsNum = StartAsteroidNum;
         SpawnPlayer();
         ScheduleNextUfo();
         StartRound();
+        if (OnGameStarted != null) OnGameStarted.Invoke();
     }
 
     void StartRound()
@@ -86,6 +96,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void GameOver()
+    {
+        GameStarted = false;
+        if (OnGameOver != null) OnGameOver.Invoke();
+    }
+
+    void SetScore(int value)
+    {
+        Score = value;
+        if (OnScoreChanged != null) OnScoreChanged.Invoke(Score);
+    }
+
+    void SetPlayerLifes(int value)
+    {
+        CurrentPlayerLifes = value;
+        if (OnLifesChanged != null) OnLifesChanged.Invoke(CurrentPlayerLifes);
+    }
+
     void ScheduleNextUfo() => nextUfoSpawnTime = Time.time + Random.Range(UfoMinCooldoww, UfoMaxCooldown);
 
     public void RegisterAsteroid(Asteroid asteroid)
@@ -95,11 +123,23 @@ public class GameManager : MonoBehaviour
 
     public void OnDestructibleDestroyed(Destructible destructible)
     {
-        Score += destructible.ScorePoints;
+        if (destructible.ScorePoints > 0)
+        {
+            // возможно очки далжны начисляться только если сам игрок уничтожил обьект
+            SetScore(Score + destructible.ScorePoints);
+        }
         if (PlayerShip && PlayerShip.gameObject == destructible.gameObject)
         {
             PlayerShip = null;
-            playerRespawnTime = Time.time + RespawnTime;
+            SetPlayerLifes(CurrentPlayerLifes - 1);
+            if (CurrentPlayerLifes == 0)
+            {
+                GameOver();
+            }
+            else
+            {
+                playerRespawnTime = Time.time + RespawnTime;
+            }
 
         }
         else if (ufo && ufo.gameObject == destructible.gameObject)

@@ -1,21 +1,15 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(InputHandler))]
 public class PlayerController : MonoBehaviour
 {
 
     Ship playerShip;
-    InputHandler inputHandler;
+    InputHandler inputHandler => InputHandler.Instance;
     PlayerInputType inputType => inputHandler.InputType;
 
     private void Awake()
     {
         playerShip = GetComponent<Ship>();
-        inputHandler = GetComponent<InputHandler>();
-    }
-
-    void Start()
-    {
     }
 
     void Update()

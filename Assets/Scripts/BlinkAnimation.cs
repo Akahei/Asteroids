@@ -36,7 +36,6 @@ public class BlinkAnimation : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log("Disable");
         foreach(var rend in renderers)
         {
             rend.enabled = true;

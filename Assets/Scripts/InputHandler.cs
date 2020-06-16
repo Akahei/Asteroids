@@ -11,19 +11,30 @@ public enum PlayerInputType
 public class InputHandler : MonoBehaviour
 {
     public PlayerInputType InputType = PlayerInputType.MouseAndKeyboard;
+    public bool ProcessInput = false;
+
+    static public InputHandler Instance;
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     public bool IsForwardInputDown()
     {
-        return Input.GetButton("Forward");
+        if (!ProcessInput) return false;
+        return Input.GetButton("Forward") || (IsUsingMouse() && Input.GetButton("Forward_m"));
     }
 
     public bool IsFireInputDown()
     {
-        return Input.GetButtonDown("Fire");
+        if (!ProcessInput) return false;
+        return Input.GetButtonDown("Fire") || (IsUsingMouse() && Input.GetButtonDown("Fire_m"));
     }
 
     public float GetRotationInput()
     {
+        if (!ProcessInput) return 0f;
         return Input.GetAxis("Rotation");
     }
 
@@ -31,4 +42,6 @@ public class InputHandler : MonoBehaviour
     {
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
+
+    bool IsUsingMouse() => InputType == PlayerInputType.MouseAndKeyboard;
 }

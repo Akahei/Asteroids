@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2747676216888340287
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2747676216888340285}
+  - component: {fileID: 2747676216888340284}
+  - component: {fileID: 2747676216888340274}
+  - component: {fileID: 2747676216888340275}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2747676216888340285
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2747676216888340287}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.72, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2747676216888340284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2747676216888340287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a976b8915bcf0b9408b352e3b1685ed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2747676216888340274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2747676216888340287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0bbf8785297f0245a90657d120dc421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerShipPrefab: {fileID: 4842522919836821374, guid: cc7ae2c9fb0fc434597b6f8ab312aa86,
+    type: 3}
+  RespawnTime: 2
+  Lifes: 5
+  StartAsteroidNum: 2
+  AsteroidsIncremment: 1
+  AsteroidPrefab: {fileID: 2893793097404687333, guid: 8b5ef4bb785d11f4aae7cd7acea9e9de,
+    type: 3}
+  UfoPrefab: {fileID: 6720862871169777787, guid: 8c4720cd0d9a99e48b462a1e62d8d62e,
+    type: 3}
+  UfoMinCooldoww: 1
+  UfoMaxCooldown: 2
+  UfoMinDistanceFromEdge: 0.2
+--- !u!114 &2747676216888340275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2747676216888340287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d949b8e56abe0464da0a904f65322595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InputType: 1
+  ProcessInput: 0
