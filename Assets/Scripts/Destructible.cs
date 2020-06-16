@@ -3,7 +3,7 @@
 public class Destructible : MonoBehaviour, IResetable
 {
     PoolItem poolItem;
-    void Awake()
+    protected virtual void Awake()
     {
         poolItem = GetComponent<PoolItem>();
     }
@@ -11,7 +11,7 @@ public class Destructible : MonoBehaviour, IResetable
     public void Destroy()
     {
         GameManager.Instance.OnDestructibleDestroyed(this);
-        if (poolItem)
+        if (poolItem != null)
         {
             poolItem.ReturnToPool();
         }
@@ -23,11 +23,12 @@ public class Destructible : MonoBehaviour, IResetable
 
     public void ResetObject()
     {
-        Destroy();
+        if (gameObject.activeInHierarchy) Destroy(); 
     }
 
     protected virtual void OnTriggerEnter(Collider other)
     {
+        if (!gameObject.activeInHierarchy) return;
         var otherDestr = other.GetComponentInParent<Destructible>();
         if (otherDestr != null)
         {

@@ -23,8 +23,9 @@ public class Ship : Destructible
     float invulnerableTimeEnd = 0;
     MaterialPropertyBlock projectileColorMPB;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         rbody = GetComponent<Rigidbody>();
         blinkAnimation = GetComponent<BlinkAnimation>();
     }

@@ -12,12 +12,11 @@ public class Asteroid : Destructible
     public float AngleBetweenSmallerAsteroids = 90;
 
     Rigidbody rbody;
-    Destructible destructible;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         rbody = GetComponent<Rigidbody>();
-        destructible = GetComponent<Destructible>();
     }
 
     public void Init(Vector2 pos, float rot, float speed)

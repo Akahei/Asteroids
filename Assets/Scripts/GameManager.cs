@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
 
     void SpawnAsteroids(int num)
     {
+        asteroidsList.Clear();
         for (int i = 0; i < num; i++)
         {
             var asteroid = PoolManager.Instance.GetInstance(AsteroidPrefab);
@@ -137,7 +138,8 @@ public class GameManager : MonoBehaviour
             // возможно очки далжны начисляться только если сам игрок уничтожил обьект
             SetScore(Score + scoreObject.ScorePoints);
         }
-        if (PlayerShip && PlayerShip.gameObject == destructible.gameObject)
+        
+        if (PlayerShip && PlayerShip == destructible)
         {
             PlayerShip = null;
             SetPlayerLifes(CurrentPlayerLifes - 1);
@@ -151,14 +153,14 @@ public class GameManager : MonoBehaviour
             }
 
         }
-        else if (ufo && ufo.gameObject == destructible.gameObject)
+        else if (ufo && ufo == destructible)
         {
             ufo = null;
             ScheduleNextUfo();
         }
         else
         {
-            var asteroid = destructible.GetComponent<Asteroid>();
+            var asteroid = destructible as Asteroid;
             if (asteroid != null)
             {
                 asteroidsList.Remove(asteroid);

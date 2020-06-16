@@ -43,11 +43,6 @@ public class PoolManager : MonoBehaviour
         GetGameObject(item.InstancedObject).SetActive(false);
     }
 
-    void SetActive(Object obj, bool active)
-    {
-        GetGameObject(obj).SetActive(active);
-    }
-
     GameObject GetGameObject(Object obj)
     {
         if (obj is Component component)
