@@ -10,13 +10,13 @@ public class Destructible : MonoBehaviour, IResetable
         poolItem = GetComponent<PoolItem>();
     }
 
-    public void Destroy()
+    public void Explode(bool SpawnFX = true)
     {
-        if (DestroyFXPrefab != null)
+        if (SpawnFX && DestroyFXPrefab != null)
         {
             Instantiate(DestroyFXPrefab, transform.position, transform.rotation);
         } 
-        GameManager.Instance.OnDestructibleDestroyed(this);
+        GameManager.Instance.OnDestructibleExplode(this);
         if (poolItem != null)
         {
             poolItem.ReturnToPool();
@@ -30,7 +30,7 @@ public class Destructible : MonoBehaviour, IResetable
 
     public void ResetObject()
     {
-        if (gameObject.activeInHierarchy) Destroy(); 
+        if (gameObject.activeInHierarchy) Explode(false); 
     }
 
     protected virtual void OnTriggerEnter(Collider other)
@@ -39,8 +39,8 @@ public class Destructible : MonoBehaviour, IResetable
         var otherDestr = other.GetComponentInParent<Destructible>();
         if (otherDestr != null)
         {
-            otherDestr.Destroy();
-            Destroy();
+            otherDestr.Explode();
+            Explode();
         } 
     }
 }

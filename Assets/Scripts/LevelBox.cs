@@ -8,16 +8,18 @@ public class LevelBox : MonoBehaviour
     static public LevelBox Instance { get; private set; }
 
     public List<Actor> Actors { get; private set; } = new List<Actor>();
-    public Vector2 Size { get; private set; }
+    public Vector2 Size { get; private set; } 
     public Vector2 Extents { get; private set; }
-    private BoxCollider boxCollider;
+    public Bounds LevelBounds;
 
     void Awake()
     {
         Instance = this;
-        boxCollider = GetComponent<BoxCollider>();
-        Size = boxCollider.size;
-        Extents = boxCollider.size / 2;
+        var viewportSize = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, 0)) * 2;
+        viewportSize.z = 5;
+        Size = viewportSize;
+        Extents = Size / 2;
+        LevelBounds = new Bounds(Vector3.zero, viewportSize);
     }
 
     void Update()
@@ -27,7 +29,7 @@ public class LevelBox : MonoBehaviour
             if (!actor.gameObject.activeInHierarchy) continue;
 
             var objectPos = actor.gameObject.transform.position;
-            if (!boxCollider.bounds.Contains(actor.transform.position))
+            if (!LevelBounds.Contains(actor.transform.position))
             {
                 var relativePos = objectPos - gameObject.transform.position;
                 if (Math.Abs(relativePos.x) > Size.x / 2)
@@ -80,5 +82,11 @@ public class LevelBox : MonoBehaviour
     {
         var maxY = Extents.y * (1 - marginFromTopBot);
         return new Vector2(UE.Random.value > 0.5f ?  Extents.x : -Extents.x, UE.Random.Range(-maxY, maxY));
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(LevelBounds.center, LevelBounds.size);
     }
 }

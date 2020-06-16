@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public int StartAsteroidNum = 2;
     public int AsteroidsIncremment = 1;
     public Asteroid AsteroidPrefab;
+    public float TimeBeetweenWaveSpawn = 2;
 
     [Header("Ufo")]
     public Ufo UfoPrefab;
@@ -32,12 +33,12 @@ public class GameManager : MonoBehaviour
     public UnityAction OnGameStarted;
     public UnityAction OnGameOver;
 
-    int nextRoundAsteroidsNum;
+    int nextWaveAsteroidsNum;
     List<Asteroid> asteroidsList = new List<Asteroid>();
 
     Ufo ufo = null;
     float nextUfoSpawnTime = float.MaxValue;
-
+    float nextWaveTime = float.MaxValue;
     float playerRespawnTime = float.MaxValue;
 
     static public GameManager Instance;
@@ -63,6 +64,11 @@ public class GameManager : MonoBehaviour
             ufo.transform.rotation = Quaternion.Euler(0, 0, ufo.transform.position.x > 0 ? -90 : 90);
             ScheduleNextUfo();
         }
+
+        if (asteroidsList.Count == 0 && Time.time >= nextWaveTime)
+        {
+            StartWave();
+        }
     }
 
     public void NewGame()
@@ -75,17 +81,17 @@ public class GameManager : MonoBehaviour
         GameStarted = true;
         SetScore(0);
         SetPlayerLifes(Lifes);
-        nextRoundAsteroidsNum = StartAsteroidNum;
+        nextWaveAsteroidsNum = StartAsteroidNum;
         SpawnPlayer();
         ScheduleNextUfo();
-        StartRound();
+        StartWave();
         if (OnGameStarted != null) OnGameStarted.Invoke();
     }
 
-    void StartRound()
+    void StartWave()
     {
-        SpawnAsteroids(nextRoundAsteroidsNum);
-        nextRoundAsteroidsNum += AsteroidsIncremment;
+        SpawnAsteroids(nextWaveAsteroidsNum);
+        nextWaveAsteroidsNum += AsteroidsIncremment;
     }
 
     void SpawnPlayer()
@@ -122,13 +128,14 @@ public class GameManager : MonoBehaviour
     }
 
     void ScheduleNextUfo() => nextUfoSpawnTime = Time.time + Random.Range(UfoMinCooldoww, UfoMaxCooldown);
+    void ScheduleNextWave() => nextWaveTime = Time.time + TimeBeetweenWaveSpawn;
 
     public void RegisterAsteroid(Asteroid asteroid)
     {
         asteroidsList.Add(asteroid);
     }
 
-    public void OnDestructibleDestroyed(Destructible destructible)
+    public void OnDestructibleExplode(Destructible destructible)
     {
         if (!GameStarted) return;
 
@@ -164,7 +171,7 @@ public class GameManager : MonoBehaviour
             if (asteroid != null)
             {
                 asteroidsList.Remove(asteroid);
-                if (asteroidsList.Count == 0) StartRound();
+                if (asteroidsList.Count == 0) ScheduleNextWave();
             }
         }
     }
