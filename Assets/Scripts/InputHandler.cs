@@ -10,14 +10,20 @@ public enum PlayerInputType
 
 public class InputHandler : MonoBehaviour
 {
-    public PlayerInputType InputType = PlayerInputType.MouseAndKeyboard;
+    public PlayerInputType InputType {get; private set;} = PlayerInputType.MouseAndKeyboard;
     public bool ProcessInput = false;
 
     static public InputHandler Instance;
 
+    static private string PrefKey_InputType = "InputType";
+
     void Awake()
     {
         Instance = this;
+        if (PlayerPrefs.HasKey(PrefKey_InputType))
+        {
+            InputType = (PlayerInputType)PlayerPrefs.GetInt(PrefKey_InputType);
+        }
     }
 
     public bool IsForwardInputDown()
@@ -41,6 +47,12 @@ public class InputHandler : MonoBehaviour
     public Vector3 GetMouseInWorldPosition()
     {
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    public void SetInputType(PlayerInputType newType)
+    {
+        InputType = newType;
+        PlayerPrefs.SetInt(PrefKey_InputType, (int)newType);
     }
 
     bool IsUsingMouse() => InputType == PlayerInputType.MouseAndKeyboard;

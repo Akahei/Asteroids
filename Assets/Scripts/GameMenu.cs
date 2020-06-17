@@ -72,7 +72,7 @@ public class GameMenu : MonoBehaviour
 
     public void SetControlType(PlayerInputType type)
     {
-        InputHandler.Instance.InputType = type;
+        InputHandler.Instance.SetInputType(type);
         ControlsText.text = "Controls:\n";
         if (InputHandler.Instance.InputType == PlayerInputType.Keyboard)
         {
