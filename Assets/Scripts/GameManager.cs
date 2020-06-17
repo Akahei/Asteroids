@@ -138,14 +138,13 @@ public class GameManager : MonoBehaviour
         asteroidsList.Add(asteroid);
     }
 
-    public void OnDestructibleExplode(Destructible destructible)
+    public void OnDestructibleExplode(Destructible destructible, GameObject instigator)
     {
         if (!GameStarted) return;
 
         var scoreObject = destructible.GetComponent<ScoreObject>();
-        if (scoreObject && scoreObject.ScorePoints > 0)
+        if (scoreObject && scoreObject.ScorePoints > 0 && instigator.GetComponent<PlayerController>() != null)
         {
-            // возможно очки далжны начисляться только если сам игрок уничтожил обьект
             SetScore(Score + scoreObject.ScorePoints);
         }
         

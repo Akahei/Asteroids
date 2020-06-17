@@ -61,7 +61,7 @@ public class Projectile : MonoBehaviour, IResetable
             }
             if (owner != otherDest.gameObject)
             {
-                otherDest.Explode();
+                otherDest.Explode(owner);
                 Destroy();
             }
         }
