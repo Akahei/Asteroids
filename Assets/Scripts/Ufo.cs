@@ -3,7 +3,10 @@
 [RequireComponent(typeof(Rigidbody))]
 public class Ufo : Destructible
 {
+    [Header("Movement")]
     public float Speed = 2;
+    public float Amplitude = 1.5f;
+    public float Preiod = 3;
 
     [Header("Weapon")]
     public Cannon UfoCannon;
@@ -11,19 +14,23 @@ public class Ufo : Destructible
     public float MaxFireCooldown = 5;
 
     float nextShootTime;
+    float nextTimeChangeDirection;
     Ship playerShip => GameManager.Instance.PlayerShip;
+    Rigidbody rbody;
 
     void Start()
     {
         ScheduleNextFire();
-        var rbody = GetComponent<Rigidbody>();   
-        rbody.velocity = transform.up * Speed;
+        rbody = GetComponent<Rigidbody>();   
     }
 
     void ScheduleNextFire() => nextShootTime = Time.time + Random.Range(MinFireCooldown, MaxFireCooldown);
 
     void Update()
     {
+        var sinMovement = Mathf.Sin(Time.time * Mathf.PI * 2 / Preiod) * Amplitude;
+        rbody.velocity = (transform.up + transform.right * sinMovement) * Speed;
+
         if (Time.time > nextShootTime) Fire();
     }
 

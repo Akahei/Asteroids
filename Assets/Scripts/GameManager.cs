@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
         {
             ufo = Instantiate(UfoPrefab);
             ufo.transform.position = LevelBox.Instance.GetRandomPointOnLeftRightEdge(UfoMinDistanceFromEdge);
-            ufo.transform.rotation = Quaternion.Euler(0, 0, ufo.transform.position.x > 0 ? -90 : 90);
+            ufo.transform.rotation = Quaternion.Euler(0, 0, ufo.transform.position.x > 0 ? 90 : -90);
             ScheduleNextUfo();
         }
 
@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
         if (!GameStarted) return;
 
         var scoreObject = destructible.GetComponent<ScoreObject>();
-        if (scoreObject && scoreObject.ScorePoints > 0 && instigator.GetComponent<PlayerController>() != null)
+        if (scoreObject && scoreObject.ScorePoints > 0 && instigator && instigator.GetComponent<PlayerController>() != null)
         {
             SetScore(Score + scoreObject.ScorePoints);
         }
