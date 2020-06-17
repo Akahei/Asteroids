@@ -105,7 +105,10 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < num; i++)
         {
             var asteroid = PoolManager.Instance.GetInstance(AsteroidPrefab);
-            asteroid.Init(LevelBox.Instance.GetRandomPointOnEdge(), Random.Range(0f, 360f), asteroid.GetRandomSpeed());
+            (var spawnPoint, var direction) = LevelBox.Instance.GetRandomPointOnEdge();
+            var rotation = Quaternion.LookRotation(Vector3.forward, direction).eulerAngles.z;
+            rotation += Random.Range(-90, 90);
+            asteroid.Init(spawnPoint, rotation, asteroid.GetRandomSpeed());
         }
     }
 
