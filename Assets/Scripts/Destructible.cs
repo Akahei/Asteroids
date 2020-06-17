@@ -14,7 +14,9 @@ public class Destructible : MonoBehaviour, IResetable
     {
         if (SpawnFX && DestroyFXPrefab != null)
         {
-            Instantiate(DestroyFXPrefab, transform.position, transform.rotation);
+            var explosion = PoolManager.Instance.GetInstance(DestroyFXPrefab);
+            explosion.transform.position = transform.position;
+            explosion.transform.rotation = transform.rotation;
         } 
         GameManager.Instance.OnDestructibleExplode(this, instigator);
         if (poolItem != null)
